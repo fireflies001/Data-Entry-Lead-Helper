@@ -1,0 +1,7 @@
+__pycache__/
+**/__pycache__/
+test.csv
+myvenv/
+Lead Helper.spec
+build/
+dist/

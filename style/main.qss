@@ -1,0 +1,23 @@
+QPushButton[variant="primary"] {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+}
+
+QPushButton[variant="primary"]:hover {
+    background-color: #1d4ed8;
+}
+
+QPushButton[variant="secondary"] {
+    background-color: #e5e7eb;
+    color: #111827;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 10px 16px;
+}
+
+QPushButton[variant="secondary"]:hover {
+    background-color: #dbe3ea;
+}
