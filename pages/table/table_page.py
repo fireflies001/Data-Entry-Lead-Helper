@@ -33,10 +33,10 @@ class TablePage(QWidget):
                 if len(row_data.get('Owner 2 First Name')) and len(row_data.get('Owner 2 Last Name')):
                     for x in range(2):
                         data.append((f"{row_data.get(f'Owner {x + 1} First Name')} " f"{row_data.get(f'Owner {x + 1} Last Name')}", 
-                                     address_norm, row_data.get('NUMBER')))
+                                     address_norm, ''))
                 else:
                     data.append((f"{row_data.get('Owner 1 First Name')} " f"{row_data.get('Owner 1 Last Name')}", 
-                                     address_norm, row_data.get('NUMBER')))
+                                     address_norm, ''))
             self.table.process_data(data)
         except Exception as e:
             print(f"Error at {GLOBAL_CURRENT_FUNCTION} - {lastalgo} ", e)
