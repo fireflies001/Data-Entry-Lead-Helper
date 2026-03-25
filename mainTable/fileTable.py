@@ -39,12 +39,25 @@ class FileTable(QTableWidget):
                     self.setItem(row,c,item)
         except Exception as e:
             print(f"Error at {GLOBAL_CURRENT_FUNCTION} - {lastalgo} ", e)
+
     def copy_numbers_from_table(self):
         values = []
+        previous_address = None
 
         for row in range(self.rowCount()):
+            address_item = self.item(row, 1)
             item = self.item(row, 2)
-            if item and item.text().strip():
-                values.append(item.text().strip())
+            if not address_item or not item:
+                continue
+
+            address = address_item.text().strip()
+            number = item.text().strip()
+
+            if address == previous_address and values:
+                values[-1] += " " + number
+            else:
+                values.append(number)
+
+            previous_address = address
                 
         QApplication.clipboard().setText("\n".join(values))
