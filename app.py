@@ -4,7 +4,7 @@ from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QStackedWidget
 from PySide6.QtCore import Qt
 from pages.settings.settings_page import SettingsPage
 from pages.table.table_page import TablePage
-
+import uuid
 
 def resource_path(relative_path):
     if hasattr(sys, "_MEIPASS"):
@@ -14,11 +14,14 @@ def resource_path(relative_path):
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
+        self.current_session_id = self.generate_session()
         self.setWindowTitle("Lead Helper")
         self.resize(600, 600)
         self.stack = QStackedWidget()
         self.settings_page = SettingsPage(self.show_home, self.handleFileUpload)
         self.home_page = TablePage()
+        self.settings_page.set_session_id(self.current_session_id)
+        self.home_page.set_session_id(self.current_session_id)
         self.stack.addWidget(self.settings_page)
         self.stack.addWidget(self.home_page)
         layout = QVBoxLayout()
@@ -27,15 +30,26 @@ class MainWindow(QWidget):
         layout.addWidget(self.stack)
         self.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint, True)
         self.setLayout(layout)
+
+
     def handleFileUpload(self, rows):
+        self.current_session_id = self.generate_session()
+        self.settings_page.set_session_id(self.current_session_id)
+        self.home_page.set_session_id(self.current_session_id)
         self.home_page.load_data(rows)
         self.show_home()
+
 
     def show_home(self):
         self.stack.setCurrentWidget(self.home_page)
 
+
     def show_settings(self):
         self.stack.setCurrentWidget(self.settings_page)
+
+
+    def generate_session(self) -> str:
+        return uuid.uuid4().hex[:8]
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
